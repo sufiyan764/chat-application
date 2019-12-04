@@ -20,19 +20,35 @@ $(function () {
         feedback.html("<p><i>" + data.username + " is typing.." + "</i></p>");
     });
 
+
+    message.bind("keyup", () => {
+        setTimeout(() => {
+            socket.emit('nottyping');
+        }, 3000);
+    });
+
+
+
+    socket.on("nottyping", function (data) {
+        feedback.html("<p><i>&nbsp;</i></p>");
+    });
+
     //emit message
     send_message.click(function () {
         socket.emit("message", { message: message.val() })
-    });
-
-    socket.on("message", function (data) {
-        chatroom.append("<p class='message'>" + data.username + ": " + data.message);
     });
 
     //emit username
     send_username.click(function () {
         socket.emit("change_username", { username: username.val() })
     });
+
+    //listen message and username
+    socket.on("message", function (data) {
+        chatroom.append("<p class='message'>" + data.username + ": " + data.message);
+    });
+
+
 
     socket.on("disconnect", function (data) {
         socket.connect();

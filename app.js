@@ -28,11 +28,14 @@ nsp.on("connection", function (socket) {
         console.log(socket.username + " connected");
     });
 
-
     //listen on typing message
     socket.on("typing", function (data) {
         socket.broadcast.to("chatroom").emit("typing", { username: socket.username });
-    })
+    });
+
+    socket.on("nottyping", function (data) {
+        socket.broadcast.to("chatroom").emit("nottyping");
+    });
 
     //listen on new message
     socket.on("message", function (data) {
@@ -43,5 +46,5 @@ nsp.on("connection", function (socket) {
 
     socket.on("disconnect", function (data) {
         console.log(socket.username + " disconnected");
-    })
+    });
 });
