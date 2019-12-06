@@ -21,10 +21,16 @@ $(function () {
     });
 
 
-    message.bind("keyup", () => {
-        setTimeout(() => {
-            socket.emit('nottyping');
-        }, 3000);
+    message.bind("keyup", (e) => {
+        if (e.keyCode === 13) {
+            if (message.val().length > 0) {
+                send_message.click();
+            }
+        } else {
+            setTimeout(() => {
+                socket.emit('nottyping');
+            }, 3000);
+        }
     });
 
 
@@ -32,6 +38,7 @@ $(function () {
     socket.on("nottyping", function (data) {
         feedback.html("<p><i>&nbsp;</i></p>");
     });
+
 
     //emit message
     send_message.click(function () {
