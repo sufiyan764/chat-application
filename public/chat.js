@@ -13,6 +13,9 @@ $(function () {
     //Emit typing
     message.bind("keypress", () => {
         socket.emit('typing');
+        setTimeout(() => {
+            socket.emit('nottyping');
+        }, 3000);
     });
 
     //Listen on typing
@@ -26,10 +29,6 @@ $(function () {
             if (message.val().length > 0) {
                 send_message.click();
             }
-        } else {
-            setTimeout(() => {
-                socket.emit('nottyping');
-            }, 3000);
         }
     });
 
