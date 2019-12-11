@@ -1,6 +1,6 @@
 $(function () {
     //make connection
-    var socket = io.connect("http://192.168.1.66:3000/chatroom1")
+    var socket = io.connect("http://192.168.1.66:3000/chatroom2")
 
     //buttons and inputs
     var username = $("#username");
